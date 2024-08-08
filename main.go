@@ -7,6 +7,14 @@ import (
 )
 
 func main() {
+	err21()
+
+
+
+}
+
+// 21实现一个convert方法，将切片int转换成另一个类型的切片string
+func err21(){
 	ints := []int{3, 7, 9, 4, 4}
 
 	//切片int convert string
@@ -16,22 +24,15 @@ func main() {
 	fmt.Printf("%T", convert2(ints))
 	fmt.Println(convert2(ints))
 
-
 	fmt.Printf("%T", convert22(ints))
 	fmt.Println(convert22(ints))
-
 
 	fmt.Printf("%T", convert3(ints))
 	fmt.Println( convert3(ints))
 
 	fmt.Printf("%T", convert33(ints))
 	fmt.Println( convert33(ints))
-
-
-
 }
-
-// 21实现一个convert方法，将切片int转换成另一个类型的切片string
 // 法一
 func convert1(ints []int) []string {
 	strs := make([]string, 0)
@@ -81,3 +82,9 @@ func convert33(ints []int)[]string{
 	}
 	return strs
 }
+
+
+
+//22切片为nil和空混淆
+//nil,切片等于nil
+//空，长度为零
