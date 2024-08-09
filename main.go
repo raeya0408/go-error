@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"runtime"
 	"strconv"
 )
 
@@ -213,7 +214,29 @@ func getMessageType(msg []byte)[]byte{
 // func getMessageType(msg []byte)[]byte{
 // 	return msg[:5:5]
 // }
+//场景二切片和引用
+type S struct{
+	s []byte
+}
+func SS(){
+	Ss:=make([]S,1_000)
+	printAlloc()
+	for i:=0;i<len(Ss);i++{
+		Ss[i]=S{
+			s:make([]byte, 1024*1024),
+		}
+	}
+	printAlloc()
 
+	two:=keepFirstTwoElementsOnly(Ss)
+	runtime.GC()
+	printAlloc()
+	runtime.KeepAlive(two)//保持对变量two的引用
+}
+func keepFirstTwoElementsOnly(Ss []S)[]S{
+	return Ss[:2]
+}
+func printAlloc(){}
 
 
 //27
