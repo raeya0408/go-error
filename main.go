@@ -9,6 +9,8 @@ func main() {
 	err21()
 	err22()
 	err24()
+	err25()
+
 
 
 
@@ -157,6 +159,61 @@ func err24(){
 	fmt.Println(dst2)
 }
 
+
+
 //25切片使用append的副作用
+// func 示例(){
+// 	//示例
+// 	s1:=[]int{1,2,3}
+// 	s2:=s1[1:2]
+// 	s3:=append(s2,10)
+// 	fmt.Println(s1,s2,s3)//s1切片第三个元素也发生了修改
+
+// 	s:=[]int{6,7,8}
+// 	f(s[:2])//亦发生在切片作为参数传递给某个函数
+// 	fmt.Println(s)
+// }
+func f(s []int){
+	_=append(s,10)
+}
+func err25(){
+	//法一
+	s:=[]int{1,2,3}
+	sCopy:=make([]int,2)
+	copy(sCopy,s)
+	f(sCopy)
+	fmt.Println(s)
+	//法二
+	f(s[:2:2])//第三个参数规定cap
+}
 
 
+
+//26切片和内存泄漏
+//场景一
+// func consumeMessage(){
+// 	for{
+// 		msg:=receiveMessage()//假设每次msg都是一个长度为100000的字节切片
+// 		storeMessageType(getMessageType(msg))
+// 	}
+// }
+//字节切片截取函数，截取前五个字符
+// func getMessageType(msg []byte)[]byte{
+// 	return msg[:5]
+// }
+
+//解决方案
+//有效
+func getMessageType(msg []byte)[]byte{
+	msgType:=make([]byte,5)
+	copy(msgType,msg)
+	return msgType
+}
+//无效
+// func getMessageType(msg []byte)[]byte{
+// 	return msg[:5:5]
+// }
+
+
+
+//27
